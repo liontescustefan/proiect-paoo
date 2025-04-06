@@ -11,39 +11,44 @@ public class MenuPanel extends JPanel {
     private GamePanel gamePanel;
     private JFrame frame;
     private boolean gameStarted = false;
-    private Image backgroundImage;
+    private Image imagine;
 
+    //se creeaza meniul
     public MenuPanel(JFrame frame) {
         this.frame = frame;
 
+        //se incarca imaginea de fundal pentru meniu
         try {
-            backgroundImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("hq720.jpg"))); // Schimbă cu calea imaginii tale
+            imagine = ImageIO.read(Objects.requireNonNull(getClass().getResource("hq720.jpg")));
         } catch (IOException e) {
             e.printStackTrace();
-            // Dacă imaginea nu poate fi încărcată, folosește un fundal negru
-            backgroundImage = null;
+            // daca nu poate fi incarcata imaginea se foloseste un fundal negru
+            imagine = null;
         }
 
+        //dimensiune meniu
         setLayout(new GridBagLayout());
         setPreferredSize(new Dimension(1280, 720));
-        
-        // Create and style the New Game button
+
+        // creeaza butonul new game
         newGameButton = new JButton("New Game");
         newGameButton.setFont(new Font("Arial", Font.BOLD, 24));
         newGameButton.setForeground(Color.WHITE);
         newGameButton.setBackground(new Color(60, 60, 60));
-        newGameButton.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+        newGameButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         newGameButton.setFocusPainted(false);
 
+
+        // creeaza butonul exit
         exitButton = new JButton("Exit");
         exitButton.setFont(new Font("Arial", Font.BOLD, 24));
         exitButton.setForeground(Color.WHITE);
         exitButton.setBackground(new Color(60, 60, 60));
-        exitButton.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+        exitButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         exitButton.setFocusPainted(false);
 
-        
-        // Add hover effect
+
+        // efectul pentru cand se da hover peste buton
         newGameButton.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent e) {
                 newGameButton.setBackground(new Color(80, 80, 80));
@@ -55,7 +60,6 @@ public class MenuPanel extends JPanel {
             }
         });
 
-        // Add hover effect for Exit button
         exitButton.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent e) {
                 exitButton.setBackground(new Color(80, 80, 80));
@@ -66,20 +70,21 @@ public class MenuPanel extends JPanel {
                 exitButton.repaint();
             }
         });
-        // Add click action
+
+        // actiune pentru click
         newGameButton.addActionListener(e -> startGame());
         exitButton.addActionListener(e->exitGame());
 
+        //spatiu intre butoane
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(10, 0, 10, 0); // Add spacing
+        gbc.insets = new Insets(10, 0, 10, 0);
 
-        // Add New Game button
+        //afisarea butoanelor
         gbc.gridy = 0;
         add(newGameButton, gbc);
 
-        // Add Exit button below with spacing
         gbc.gridy = 1;
         add(exitButton, gbc);
 
@@ -89,16 +94,16 @@ public class MenuPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        // Desenează imaginea de fundal
-        if (backgroundImage != null) {
-            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        // deseneaza imaginea de fundal
+        if (imagine != null) {
+            g.drawImage(imagine, 0, 0, getWidth(), getHeight(), this);
         } else {
-            // Fallback dacă imaginea nu este încărcată
             g.setColor(new Color(30, 30, 30));
             g.fillRect(0, 0, getWidth(), getHeight());
         }
     }
 
+    //actiune pentru new game
     private void startGame() {
         if (!gameStarted) {
             gameStarted = true;
@@ -110,9 +115,11 @@ public class MenuPanel extends JPanel {
             gamePanel.requestFocus();
         }
     }
+
+    //actiune pentru exit
     private void exitGame(){
         if(!gameStarted) {
             System.exit(0);
         }
     }
-} 
+}
