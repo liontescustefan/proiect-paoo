@@ -19,7 +19,7 @@ public class MenuPanel extends JPanel {
 
         //se incarca imaginea de fundal pentru meniu
         try {
-            imagine = ImageIO.read(Objects.requireNonNull(getClass().getResource("hq720.jpg")));
+            imagine = ImageIO.read(Objects.requireNonNull(getClass().getResource("dragonmeniu.png")));
         } catch (IOException e) {
             e.printStackTrace();
             // daca nu poate fi incarcata imaginea se foloseste un fundal negru
@@ -32,20 +32,26 @@ public class MenuPanel extends JPanel {
 
         // creeaza butonul new game
         newGameButton = new JButton("New Game");
-        newGameButton.setFont(new Font("Arial", Font.BOLD, 24));
+        newGameButton.setFont(new Font("georgia", Font.BOLD, 36));
         newGameButton.setForeground(Color.WHITE);
         newGameButton.setBackground(new Color(60, 60, 60));
         newGameButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         newGameButton.setFocusPainted(false);
+        newGameButton.setPreferredSize(new Dimension(300, 60));
+        newGameButton.setHorizontalAlignment(SwingConstants.CENTER);
+        newGameButton.setVerticalAlignment(SwingConstants.CENTER);
 
 
         // creeaza butonul exit
         exitButton = new JButton("Exit");
-        exitButton.setFont(new Font("Arial", Font.BOLD, 24));
+        exitButton.setFont(new Font("georgia", Font.BOLD, 36));
         exitButton.setForeground(Color.WHITE);
         exitButton.setBackground(new Color(60, 60, 60));
         exitButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         exitButton.setFocusPainted(false);
+        exitButton.setPreferredSize(new Dimension(300, 60));
+        exitButton.setHorizontalAlignment(SwingConstants.CENTER);
+        exitButton.setVerticalAlignment(SwingConstants.CENTER);
 
 
         // efectul pentru cand se da hover peste buton

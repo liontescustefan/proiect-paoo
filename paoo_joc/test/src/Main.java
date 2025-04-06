@@ -2,7 +2,7 @@ import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Isometric Bean Game");
+        JFrame frame = new JFrame("joc");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         // Create and add the menu panel
