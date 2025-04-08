@@ -1,4 +1,4 @@
-fun main(args: Array<String>) {
+fun Main(args: Array<String>) {
     var editMenu = EditMenu()
     var copy = Copy()
     var paste = Paste()

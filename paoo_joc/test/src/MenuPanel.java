@@ -8,6 +8,8 @@ import javax.imageio.ImageIO;
 public class MenuPanel extends JPanel {
     private final JButton newGameButton;
     private final JButton exitButton;
+    private final JButton loadGameButton;
+    private final JButton leaderboardButton;
     private final JFrame frame;
     private boolean gameStarted = false;
     private Image imagine;
@@ -45,7 +47,6 @@ public class MenuPanel extends JPanel {
         try {
             imagine = ImageIO.read(Objects.requireNonNull(getClass().getResource("dragonmeniu.png")));
         } catch (IOException e) {
-            // daca nu poate fi incarcata imaginea se foloseste un fundal negru
             imagine = null;
         }
 
@@ -88,12 +89,73 @@ public class MenuPanel extends JPanel {
 
         creeareButon(newGameButton, font, buttonColor, textColor, new Dimension(350, 65));
 
+        //creeaza butonul load game
+        loadGameButton = new JButton("Load Game"){
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g;
+
+                // umbra
+                g2.setColor(shadowColor);
+                g2.fillRoundRect(4, 6, getWidth()-8, getHeight()-8, 25, 25);
+
+                // desenare buton
+                g2.setColor(getBackground());
+                g2.fillRoundRect(0, 0, getWidth()-8, getHeight()-8, 25, 25);
+
+                // desenare text
+                g2.setFont(getFont());
+                FontMetrics metrics = g2.getFontMetrics();
+                int textX = (getWidth() - metrics.stringWidth(getText())) / 2;
+                int textY = ((getHeight() - metrics.getHeight()) / 2) + metrics.getAscent();
+
+                // umbra textului
+                g2.setColor(Color.BLACK);
+                g2.drawString(getText(), textX + 2, textY + 2);
+
+                //text
+                g2.setColor(getForeground());
+                g2.drawString(getText(), textX, textY);
+            }
+        };
+        creeareButon(loadGameButton, font, buttonColor, textColor, new Dimension(350, 65));
+
+        //creeaza butonul leaderboard
+        leaderboardButton = new JButton("Leaderboard"){
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g;
+
+                // umbra
+                g2.setColor(shadowColor);
+                g2.fillRoundRect(4, 6, getWidth()-8, getHeight()-8, 25, 25);
+
+                // desenare buton
+                g2.setColor(getBackground());
+                g2.fillRoundRect(0, 0, getWidth()-8, getHeight()-8, 25, 25);
+
+                // desenare text
+                g2.setFont(getFont());
+                FontMetrics metrics = g2.getFontMetrics();
+                int textX = (getWidth() - metrics.stringWidth(getText())) / 2;
+                int textY = ((getHeight() - metrics.getHeight()) / 2) + metrics.getAscent();
+
+                // umbra textului
+                g2.setColor(Color.BLACK);
+                g2.drawString(getText(), textX + 2, textY + 2);
+
+                //text
+                g2.setColor(getForeground());
+                g2.drawString(getText(), textX, textY);
+            }
+        };
+        creeareButon(leaderboardButton, font, buttonColor, textColor, new Dimension(350, 65));
+
         // creeaza butonul exit
         exitButton = new JButton("Exit"){
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
                 // umbra
                 g2.setColor(shadowColor);
@@ -134,6 +196,28 @@ public class MenuPanel extends JPanel {
             }
         });
 
+        loadGameButton.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent e) {
+                loadGameButton.setBackground(hoverColor);
+                loadGameButton.repaint();
+            }
+            public void mouseExited(MouseEvent e) {
+                loadGameButton.setBackground(buttonColor);
+                loadGameButton.repaint();
+            }
+        });
+
+        leaderboardButton.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent e) {
+                leaderboardButton.setBackground(hoverColor);
+                leaderboardButton.repaint();
+            }
+            public void mouseExited(MouseEvent e) {
+                leaderboardButton.setBackground(buttonColor);
+                leaderboardButton.repaint();
+            }
+        });
+
         exitButton.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent e) {
                 exitButton.setBackground(hoverColor);
@@ -147,19 +231,29 @@ public class MenuPanel extends JPanel {
 
         // actiune pentru click
         newGameButton.addActionListener(e -> startGame());
+        loadGameButton.addActionListener(e -> loadGame());
+        leaderboardButton.addActionListener(e -> leaderboard());
         exitButton.addActionListener(e -> exitGame());
 
         //spatiu intre butoane
         //https://stackoverflow.com/questions/20238352/understanding-gridbaglayout-constraints
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 0, 10, 0);
-        gbc.anchor = GridBagConstraints.CENTER;
 
         //afisarea butoanelor
         gbc.gridy = 0;
-        add(newGameButton, gbc);
+        add(Box.createVerticalStrut(150));
 
         gbc.gridy = 1;
+        add(newGameButton, gbc);
+
+        gbc.gridy = 2;
+        add(loadGameButton, gbc);
+
+        gbc.gridy = 3;
+        add(leaderboardButton, gbc);
+
+        gbc.gridy = 4;
         add(exitButton, gbc);
 
     }
@@ -174,6 +268,7 @@ public class MenuPanel extends JPanel {
         if (imagine != null) {
             g.drawImage(imagine, 0, 0, getWidth(), getHeight(), this);
         } else {
+            //daca nu este imagine se pune fundal negru
             g.setColor(new Color(0, 0, 0));
         }
     }
@@ -188,6 +283,18 @@ public class MenuPanel extends JPanel {
             frame.pack();
             frame.setLocationRelativeTo(null);
             gamePanel.requestFocus();
+        }
+    }
+
+    private void loadGame(){
+        if (!gameStarted) {
+            //load
+        }
+    }
+
+    private void leaderboard(){
+        if(!gameStarted){
+            //leaderboard
         }
     }
 
